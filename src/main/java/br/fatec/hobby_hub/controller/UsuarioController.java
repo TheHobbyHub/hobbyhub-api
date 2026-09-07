@@ -25,7 +25,7 @@ public class UsuarioController {
     private final UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<UsuarioRespostaDTO> cadastrar(@RequestBody UsuarioCadastroDTO dto) {
+    public ResponseEntity<UsuarioRespostaDTO> cadastrar(@RequestBody @Valid UsuarioCadastroDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(dto));
     }
 
@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioRespostaDTO> alterarDados(@PathVariable Long id, @RequestBody UsuarioAtualizacaoDTO dto) {
+    public ResponseEntity<UsuarioRespostaDTO> alterarDados(@PathVariable Long id, @RequestBody @Valid UsuarioAtualizacaoDTO dto) {
         return ResponseEntity.ok(service.alterarDados(id, dto));
     }
 
@@ -51,7 +51,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO dto) {
+    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO dto) {
         boolean sucesso = service.autenticar(dto.email(), dto.senha());
         if (sucesso) {
             return ResponseEntity.ok("Login realizado com sucesso!");
@@ -70,5 +70,4 @@ public class UsuarioController {
         service.redefinirSenhaComCodigo(dto);
         return ResponseEntity.ok(Map.of("mensagem", "Senha alterada com sucesso!"));
     }
-
 }
