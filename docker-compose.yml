@@ -10,5 +10,29 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - hobbyhub-net
+
+  backend:
+    build: .
+    container_name: hobbyhub_backend
+    restart: on-failure
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      # Repare no host: usamos 'postgres' (o nome do serviço acima) e não 'localhost'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hobbyhub_db
+      SPRING_DATASOURCE_USERNAME: hobbyhub_user
+      SPRING_DATASOURCE_PASSWORD: hobbyhub_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - hobbyhub-net
+
 volumes:
   pgdata:
+
+networks:
+  hobbyhub-net:
+    driver: bridge
