@@ -51,12 +51,17 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO dto) {
+    public ResponseEntity<Object> login(@RequestBody @Valid LoginDTO dto) {
         boolean sucesso = service.autenticar(dto.email(), dto.senha());
         if (sucesso) {
-            return ResponseEntity.ok("Login realizado com sucesso!");
+
+            UsuarioRespostaDTO usuarioLogado = service.listarTodos().stream()
+                    .filter(u -> u.email().equalsIgnoreCase(dto.email()))
+                    .findFirst()
+                    .orElse(null);
+            return ResponseEntity.ok(usuarioLogado);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("mensagem", "Credenciais inválidas"));
     }
 
     @PostMapping("/esqueci-senha")

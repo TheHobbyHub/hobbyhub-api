@@ -10,7 +10,8 @@ public record UsuarioRespostaDTO(
         String email,
         String cpf,
         String telefone,
-        StatusUsuario status
+        StatusUsuario status,
+        Integer saldoCreditos
 ) {
     public UsuarioRespostaDTO(Usuario usuario) {
         this(
@@ -20,7 +21,8 @@ public record UsuarioRespostaDTO(
                 usuario.getEmail(),
                 usuario.getCpf(),
                 usuario.getTelefone(),
-                usuario.getStatus()
+                usuario.getStatus(),
+                usuario.getSaldoCreditos()
         );
     }
 }
