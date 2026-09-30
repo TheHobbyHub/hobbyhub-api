@@ -81,7 +81,7 @@ public class UsuarioService {
 
     public void solicitarCodigoRecuperacao(String email) {
         repository.findByEmail(email).ifPresent(usuario -> {
-            // Gera código numérico de 6 dígitos aleatório
+
             SecureRandom random = new SecureRandom();
             String codigo = String.valueOf(random.nextInt(900000) + 100000);
 

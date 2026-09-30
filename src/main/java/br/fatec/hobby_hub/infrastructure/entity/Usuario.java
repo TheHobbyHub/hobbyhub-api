@@ -45,6 +45,8 @@ public class Usuario {
     @Column(length = 6)
     private String codigoRecuperacao;
 
-
     private LocalDateTime codigoExpiracao;
+
+    @Column(nullable = false)
+    private Integer saldoCreditos = 0;
 }
