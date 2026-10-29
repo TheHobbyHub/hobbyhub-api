@@ -1,6 +1,7 @@
 package br.fatec.hobby_hub.controller;
 
 import br.fatec.hobby_hub.dto.AssinaturaRequestDTO;
+import br.fatec.hobby_hub.dto.ResumoAssinaturaDTO;
 import br.fatec.hobby_hub.infrastructure.entity.Plano;
 import br.fatec.hobby_hub.services.AssinaturaService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class AssinaturaController {
     @GetMapping("/planos")
     public ResponseEntity<List<Plano>> listarPlanos() {
         return ResponseEntity.ok(service.listarPlanos());
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<ResumoAssinaturaDTO> resumo(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(service.resumo(usuarioId));
     }
 
     @PostMapping("/assinar")
